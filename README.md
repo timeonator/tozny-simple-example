@@ -3,7 +3,7 @@
 ## setup
     npm install -g npm
 
-## build
+## build and run
     node run index.js
 
 
