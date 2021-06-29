@@ -4,6 +4,6 @@
     npm install -g npm
 
 ## build
-    node run index.js
+    node index.js
 
 
