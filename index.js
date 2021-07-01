@@ -1,4 +1,6 @@
 const Tozny = require('@toznysecure/sdk/node')
+const e3db = require('e3db')
+
 
 const alicia = { "name":"alicia", "token":"24ef2bdf480eafa4613affeafb26d4f2ca451288593198af6499577d909a6b45"}
 const bruce = { "name":"bruce", "token":"72d7a1bf16dbacfaf564bbc8474747d262d73693f2602793eec82d6cf3d65734"}
@@ -21,10 +23,23 @@ async function main(name) {
       signingKeys.publicKey,
       signingKeys.privateKey
     )
-    const client = new Tozny.storage.Client(config)
-    console.log(client);
+    var client = new Tozny.storage.Client(config)
+ 
 
-    // Perform additional storage actions with this client...
+    const written = await client.writeRecord(
+        'history', {
+            round:'1',
+            name :'bruce',
+        }, 
+        { move: 'scissor' }
+    );
+    console.log(`Wrote record ${written.meta.recordId}`) 
+
+    let record = await client.query();
+    console.log("query returned:");
+    console.log("name=", record.data.name);
+    console.log("round=",record.data.round);
+    console.log("move=", record.plain.move);
   } catch(e) {
     console.log("Error connecting to Tozny Server: ", e.name)
   }
